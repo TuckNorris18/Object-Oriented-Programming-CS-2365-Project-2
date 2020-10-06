@@ -1,55 +1,19 @@
 import java.util.*;
-import javax.swing.*;
 public class UnoWorkout {
     public static void main(String[] args) {
     
-        Card initialCardArray[] = new Card[384];
-        initialCardArray=createDeck(3, initialCardArray); 
+        Card fakeCardArray[] = new Card[384];
+        fakeCardArray=createDeck(3, fakeCardArray); 
         
          
-        String[] options = {"3 Decks", "2 Decks","1 Deck"};
-        
-        int x = JOptionPane.showOptionDialog(null, "How many decks?","Number of Decks to Shuffle",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
-        int d;
-        if(x==2)
-           d=1;
-        else if(x==0)
-           d=3;
-        else
-           d=2;
-        System.out.println(d);
-        
-      String[] options2 = {"Together","Separately"};
-        x = JOptionPane.showOptionDialog(null, "Should they be shuffled Separately or Together?",null,JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options2, null);
-        String s;
-        if(x==1)
-           s="Separately";
-        else
-           s="Together";
-        System.out.println(s);
-        
-      String[] options3 = {"4 Players","3 Players","2 Players","1 Player"};
-        x = JOptionPane.showOptionDialog(null, "How many players?","Number of Players",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options3, null);
-        int p;
-        if(x==3)
-           p=4;
-        else if(x==2)
-           p=3;
-        else if(x==1)
-           p=2 ;
-        else
-           p=1;
-        System.out.println(p);
-      
-          
-    
-      Scanner sc = new Scanner(System.in);  // Create a Scanner object
-      //System.out.println("How many decks?");
-      //int d = sc.nextInt();  // Read user input
-      System.out.println("Number of Decks: " + d);  // Output user input
-      //System.out.println("How many players?");
-      //int p = sc.nextInt();  // Read user input
-      System.out.println("Number of players: " + p);  // Output user input
+        Scanner sc = new Scanner(System.in); // Create a Scanner object
+        System.out.println("\nHow many decks?");
+        int d = sc.nextInt(); // Read user input
+        System.out.println("Number of Decks: " + d); // Output user input
+        System.out.println("How many players?");
+        int p = sc.nextInt(); // Read user input
+        System.out.println("Number of players: " + p); // Output user input
+
         int numberOfCards = 116;
         int numberOfPlayers = 1;
         
@@ -66,7 +30,7 @@ public class UnoWorkout {
 
         for (int i = 0; i < cardArray.length; i++) {
             cardArray[i] = new Card();
-            cardArray[i].setData(initialCardArray[i%(d*29)].a, initialCardArray[i/(d)].b);
+            cardArray[i].setData(fakeCardArray[i%(d*29)].a, fakeCardArray[i/(d)].b);
             System.out.print(cardArray[i].a + ", ");
 
         }
@@ -84,11 +48,11 @@ public class UnoWorkout {
         showHand(cardArray, p); //
 
 
-        //Card fakeCard = new Card();
-        //fakeCard.a = 2;
-        //fakeCard.b = 'B';
+        Card fakeCard = new Card();
+        fakeCard.a = 2;
+        fakeCard.b = 'B';
 
-        //cardArray = addTo(cardArray, fakeCard); //add cards to the bottom of the deck
+        cardArray = addTo(cardArray, fakeCard); //add cards to the bottom of the deck
         
         int z=1;
         while(z!=0)
@@ -153,13 +117,13 @@ public class UnoWorkout {
         return cardArray;
     }
 
-    public static Card[] addTo(Card[] cardArray, Card newCard) {
-        System.out.println("\nAdding card with values " + newCard.a + " and " + newCard.b + " to the back of the deck");
+    public static Card[] addTo(Card[] cardArray, Card fakeCard) {
+        System.out.println("\nAdding fake card with values " + fakeCard.a + " and " + fakeCard.b + " to the back of the deck");
         Card[] newArray = new Card[cardArray.length + 1];
         for (int i = 0; i < cardArray.length; i++) {
             newArray[i] = cardArray[i];
         }
-        newArray[cardArray.length] = newCard;
+        newArray[cardArray.length] = fakeCard;
         return newArray;
     }
 
@@ -298,15 +262,41 @@ public class UnoWorkout {
 }
 
 class Card {
-    int a;
-    char b;
+    int val;
+    char col;
     boolean actionCard =false;
 
     public void setData(int c, char d) {
-        a = c;
-        b = d;
+        val = c;
+        col = d;
     }
 
+    public int showValue()
+    {
+       return val; 
+    }
+    
+    public char showCol()
+    {
+        return col;
+    }
+    
+    public void colText()
+    {
+        switch(col){
+            case r:
+                System.out.print("Red");
+            case b:
+                System.out.print("Blue");
+            case y:
+                System.out.print("Yellow");
+            case g:
+                System.out.print("Green");
+            default:
+                System.out.print("black");
+        }
+    }
+    
     public void showData() {
         System.out.print(a);
         System.out.print(b + ", ");
