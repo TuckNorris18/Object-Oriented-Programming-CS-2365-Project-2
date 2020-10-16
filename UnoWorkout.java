@@ -1,11 +1,27 @@
 import java.util.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+
+
 public class UnoWorkout {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         int d = option(1);
         int p = option(2);
         int s = option(3);
+        
+        
+        
+        File myFile = new File("Output.txt");
+    	if(myFile.createNewFile()) {
+    		System.out.println("File created: " + myFile.getName());
+    		System.out.println("File created at: " + myFile.getAbsolutePath());
+    	}
+    	FileWriter writer = new FileWriter("Output.txt");
+    	writer.write("Workout");
+        
         
         
         Card fakeCardArray[] = new Card[384];
@@ -127,6 +143,10 @@ public class UnoWorkout {
            System.out.println("\n1. Proceed... (Exit = 0)");
            z = sc.nextInt();
         }
+        
+        dispTotals(player, writer);
+        writer.close();
+        System.out.println("File created at: " + myFile.getAbsolutePath());
     }
 
     public static void displayDeck(Card[] cardArray) {
@@ -134,7 +154,20 @@ public class UnoWorkout {
             cardArray[i].showData();
         }
     }
-
+    
+    public static void dispTotals(Player[] player, FileWriter writer) throws IOException {
+    	
+    	writer.write("\n\n----------TOTALS--------\n\n");
+    	
+    	for(int i = 0; i < player.length; i++)
+    	{
+    		writer.write("\nPlayer: " + (i+1));
+    		writer.write("\nTotal Pushups: " + player[i].totalPushup);
+    		writer.write("\nTotal Squats: " + player[i].totalSquat);
+    		writer.write("\nTotal Situps: " + player[i].totalSitup);
+    		writer.write("\nTotal Lunges: " + player[i].totalLunges);
+    	}
+    }
     public static void showHand(Card[] cardArray, int players) {
         for (int j = 1; j <= players; j++) {
             if (players >= j)
@@ -398,15 +431,19 @@ public class UnoWorkout {
                      if(player[i].col[j]=='R'){
                            //System.out.println(player[i].val[j]);
                            situps = situps + player[i].val[j];
+                           player[i].totalSitup += situps;
                         }
                      if(player[i].col[j]=='B'){
-                           pushups = pushups + player[i].val[j];  
+                           pushups = pushups + player[i].val[j]; 
+                           player[i].totalPushup += pushups;
                         }
                      if(player[i].col[j]=='Y'){
-                           squats = squats + player[i].val[j];  
+                           squats = squats + player[i].val[j];
+                           player[i].totalSquat += squats;
                         }
                      if(player[i].col[j]=='G'){
-                           lunges = lunges + player[i].val[j];  
+                           lunges = lunges + player[i].val[j]; 
+                           player[i].totalLunges += lunges;
                         }
                   }
                   if(player[i].val[j]==12){
@@ -636,6 +673,12 @@ class Player {
     int val[] = new int[7]; //card array with numbers
     char col[] = new char[7]; //card array with color chars
 
+    int totalPushup=0;
+	int totalSitup=0;
+	int totalSquat=0;
+	int totalLunges=0;
+    
+    
     String acText; //actionCard text
     int value = 11;
     public String acText()
