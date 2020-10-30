@@ -204,6 +204,7 @@ public class UnoWorkout {
     		writer.write("\nTotal Squats: " + player[i].totalSquat);
     		writer.write("\nTotal Situps: " + player[i].totalSitup);
     		writer.write("\nTotal Lunges: " + player[i].totalLunge);
+    		writer.write("\nTotal Rest: " + player[i].rest);
          writer.write("\nTotal Burpes: " + player[i].totalBurpe);
     	}
     }
@@ -539,6 +540,7 @@ public class UnoWorkout {
          int squats; //yellow
          int situps; //red
          int lunges; //green
+         int rest =0;
          int burpes;
          boolean[] draw2 = { false, false, false, false};
          for(int i=0; i<player.length;i++){
@@ -551,6 +553,11 @@ public class UnoWorkout {
                for(int j=0; j<player[i].val.length; j++){
                  if(player[i].val[j]<11)
                  {
+                	 if(player[i].val[j] == 0)
+                	 {
+                		 player[i].rest = player[i].rest + 2;
+                		 
+                	 }
                      if(player[i].col[j]=='R'){
                            //System.out.println(player[i].val[j]); //Moved this towards the bottom underneath the draw 2 method (its still in for loop) (it still works)
                            situps = situps + player[i].val[j];
@@ -579,6 +586,10 @@ public class UnoWorkout {
                         if(player[i].col[j]=='G')
                            draw2[3]=true;
                   }
+                  if(player[i].val[j]==13)
+                  {
+                	  rest = rest + 2;
+                  }
                   if(player[i].val[j]==14){
                         burpes = burpes + 4; //if its a Wild Card
                         
@@ -586,7 +597,7 @@ public class UnoWorkout {
                   }
                   if(player[i].val[j]==15){
                         burpes = burpes * 4; //if its a Wild Draw 4
-                  } 
+                  }
                   
                }
                
@@ -937,7 +948,8 @@ class Player {
 	 int totalSitup=0;
 	 int totalSquat=0;
 	 int totalLunge=0;
-    int totalBurpe=0;
+     int totalBurpe=0;
+     int rest=0;
 
 
      String acText; //actionCard text
