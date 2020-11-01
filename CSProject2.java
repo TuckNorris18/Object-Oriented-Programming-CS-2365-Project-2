@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 
-public class CSProject2 extends Application { 
+public class UnoWorkout extends Application { 
    public static int p = 4; //number of players. supposed to be 1. 
    public static int d = 1; //number of decks
    public static int s = 1; //way to shuffle together or separate
@@ -41,9 +41,10 @@ public class CSProject2 extends Application {
     		System.out.println("File created: " + myFile.getName());
     		System.out.println("File created at: " + myFile.getAbsolutePath());
     	}
-    	FileWriter writer = new FileWriter(output+".txt");
+    	FileWriter writer = new FileWriter(myFile.getAbsolutePath());
     	writer.write("Workout");
 
+    	
    
       //Label label = new Label();
       Group group = new Group();
@@ -158,6 +159,11 @@ public class CSProject2 extends Application {
                     player=sortHand(player);
                     player=actionCard(player,cardArray);
                     player=showWorkOut(player);
+                    
+
+                    
+                    
+                    
                     //System.out.println("\n1. Proceed... (Exit = 0)");
                     
                     //z = sc.nextInt();
@@ -170,14 +176,40 @@ public class CSProject2 extends Application {
       });
       
       end.setOnAction(new EventHandler<ActionEvent>() { //BUTTON 2
-             @Override public void handle(ActionEvent e) {
-                 
-                	//dispTotals(player, writer); //it sort of "Saves As" on the file
-        
-                  //writer.close();
+             @Override public void handle(ActionEvent e){
+            	
+            	 
+            	try {
+            	FileWriter writer2 = new FileWriter(myFile.getAbsolutePath());
+            	 
+                System.out.println(player[0].totalBurpe);
+            	writer2.write("test");          	 
+
+            	writer2.write("\n\n----------TOTALS--------\n\n");
+              	
+              	for(int i = 0; i < player.length; i++)
+              	{
+              		writer2.write("\nPlayer: " + (i+1));
+              		writer2.write("\nTotal Pushups: " + player[i].totalPushup);
+              		writer2.write("\nTotal Squats: " + player[i].totalSquat);
+              		writer2.write("\nTotal Situps: " + player[i].totalSitup);
+              		writer2.write("\nTotal Lunges: " + player[i].totalLunge);
+              		writer2.write("\nTotal Burpes: " + player[i].totalBurpe);
+              	}
+              	
+              	writer2.close();} catch (Exception e1)
+            	{
+              		System.out.println("Caught writer 2 errror...");
+            	}
+            	  
                   System.out.println("File created at: " + myFile.getAbsolutePath());
                   
                   createHTML(output); //output = a string with the text name, this method is going to look for it
+
+                  
+                
+                  
+                  
     
              }
         
@@ -208,7 +240,10 @@ public class CSProject2 extends Application {
       //Displaying the contents of the stage 
       stage.show(); 
       
-      
+     //dispTotals(player ,writer);
+      //System.out.println(player[1].totalPushup + " Total pushups");
+  	
+  	  writer.close();
    }      
    
    //Method
@@ -277,6 +312,12 @@ public class CSProject2 extends Application {
          return cardArray;
     }
 
+    public static void updateTotals(Player[] player )
+    {
+    	
+    }
+    
+    
    //Method
     //Type: Card object
     //Name: shuffleDeck
@@ -775,7 +816,7 @@ public class CSProject2 extends Application {
     		writer.write("\nTotal Squats: " + player[i].totalSquat);
     		writer.write("\nTotal Situps: " + player[i].totalSitup);
     		writer.write("\nTotal Lunges: " + player[i].totalLunge);
-         writer.write("\nTotal Burpes: " + player[i].totalBurpe);
+    		writer.write("\nTotal Burpes: " + player[i].totalBurpe);
     	}
     }
    //Method
@@ -845,6 +886,7 @@ public class CSProject2 extends Application {
       //dispTotals(player, writer); //it sort of "Saves As" on the file
    
         launch(args);
+        writer.close();
    } 
 }
 
@@ -994,7 +1036,3 @@ class Player {
          return acText;
       }
 }
-
-
-
-
